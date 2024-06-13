@@ -6,7 +6,7 @@ import (
 	"regexp"
 )
 
-func max(a, b *big.Float) *big.Float {
+func Max(a, b *big.Float) *big.Float {
 	if a.Cmp(b) > 0 {
 		return a
 	}
@@ -21,3 +21,11 @@ func CheckString(s string) error {
 	}
 	return nil
 }
+
+const (
+	QUOTE_BUY  = "LONG"
+	QUOTE_SELL = "SHORT"
+
+	TYPE_CALL = "CALL"
+	TYPE_PUT  = "PUT"
+)

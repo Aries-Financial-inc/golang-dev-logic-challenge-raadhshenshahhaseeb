@@ -31,21 +31,21 @@ func NewMarketPriceSvc(token *Token) (MarketPriceSvc, error) {
 	// much of the validations happening in this func are done since this is a mock implementation
 
 	if token == nil {
-		return nil, fmt.Errorf("nil Token: token cannot be nil")
+		return nil, fmt.Errorf("nil token: token cannot be nil")
 	}
 
 	if err := common.CheckString(strings.ToLower(token.Symbol)); err != nil {
-		return nil, fmt.Errorf("invalid Symbol: %w", err)
+		return nil, fmt.Errorf("invalid symbol: %w", err)
 	}
 	if err := common.CheckString(strings.ToLower(token.Chain)); err != nil {
-		return nil, fmt.Errorf("invalid Chain: %w", err)
+		return nil, fmt.Errorf("invalid chain: %w", err)
 	}
 	if err := common.CheckString(strings.ToLower(token.Network)); err != nil {
-		return nil, fmt.Errorf("invalid Network: %w", err)
+		return nil, fmt.Errorf("invalid network: %w", err)
 	}
 
 	if big.NewFloat(token.Price).Cmp(big.NewFloat(0)) < 0 {
-		return nil, fmt.Errorf("invalid Price: cannot be less than 0")
+		return nil, fmt.Errorf("invalid price: cannot be less than 0")
 	}
 
 	return &marketPriceSvc{domain: marketPriceDomain.InitDomain(
