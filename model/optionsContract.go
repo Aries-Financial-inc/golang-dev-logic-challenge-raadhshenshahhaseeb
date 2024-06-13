@@ -3,7 +3,6 @@ package model
 import "time"
 
 type Options struct {
-	// StrikePrice is a predetermined price at which the shares of stock will be exchanged if the option is exercised.
 	StrikePrice    float64   `json:"strike_price"`
 	Type           string    `json:"type"`
 	Bid            float64   `json:"bid"`

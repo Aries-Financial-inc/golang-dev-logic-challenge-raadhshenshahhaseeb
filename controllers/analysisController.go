@@ -2,11 +2,18 @@ package controllers
 
 import (
 	"net/http"
+	"time"
 )
 
 // OptionsContract represents the data structure of an options contract
 type OptionsContract struct {
-	// Your code here
+	StrikePrice       float64   `json:"strike_price"`
+	Type              string    `json:"type"`
+	Bid               float64   `json:"bid"`
+	Ask               float64   `json:"ask"`
+	LongShort         string    `json:"long_short"`
+	ExpirationDate    time.Time `json:"expiration_date"`
+	PriceAtExpiration float64   `json:"price_at_expiration"`
 }
 
 // AnalysisResponse represents the data structure of the analysis result
