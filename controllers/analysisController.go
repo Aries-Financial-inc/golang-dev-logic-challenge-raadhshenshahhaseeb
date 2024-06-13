@@ -26,23 +26,3 @@ type XYValue struct {
 func AnalysisHandler(w http.ResponseWriter, r *http.Request) {
 	// Your code here
 }
-
-func calculateXYValues(contracts []OptionsContract) []XYValue {
-	// Your code here
-	return nil
-}
-
-func calculateMaxProfit(contracts []OptionsContract) float64 {
-	// Your code here
-	return 0
-}
-
-func calculateMaxLoss(contracts []OptionsContract) float64 {
-	// Your code here
-	return 0
-}
-
-func calculateBreakEvenPoints(contracts []OptionsContract) []float64 {
-	// Your code here
-	return nil
-}
