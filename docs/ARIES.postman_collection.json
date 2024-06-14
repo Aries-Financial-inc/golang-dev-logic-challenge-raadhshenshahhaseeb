@@ -1,0 +1,323 @@
+{
+	"info": {
+		"_postman_id": "5024239f-ff27-4240-80e0-84af5f486707",
+		"name": "ARIES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17088493"
+	},
+	"item": [
+		{
+			"name": "Analyze",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"strike_price\": 100, \n    \"type\": \"Call\", \n    \"bid\": 10.05, \n    \"ask\": 12.04, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 102.50, \n    \"type\": \"Call\", \n    \"bid\": 12.10, \n    \"ask\": 14, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 103, \n    \"type\": \"Put\", \n    \"bid\": 14, \n    \"ask\": 15.50, \n    \"long_short\": \"short\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 105, \n    \"type\": \"Put\", \n    \"bid\": 16, \n    \"ask\": 18, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/analyze",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"analyze"
+					]
+				},
+				"description": "Analyze performs analysis on array of options."
+			},
+			"response": [
+				{
+					"name": "SUCCESS",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"strike_price\": 100, \n    \"type\": \"Call\", \n    \"bid\": 10.05, \n    \"ask\": 12.04, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2023-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 102.50, \n    \"type\": \"Call\", \n    \"bid\": 12.10, \n    \"ask\": 14, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 103, \n    \"type\": \"Put\", \n    \"bid\": 14, \n    \"ask\": 15.50, \n    \"long_short\": \"short\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 105, \n    \"type\": \"Put\", \n    \"bid\": 16, \n    \"ask\": 18, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/analyze",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"analyze"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jun 2024 14:13:54 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "216"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 1000,\n    \"message\": \"success\",\n    \"data\": {\n        \"xy_values\": [\n            {\n                \"x\": 100,\n                \"y\": -12.04\n            },\n            {\n                \"x\": 100,\n                \"y\": -14\n            },\n            {\n                \"x\": 100,\n                \"y\": 11\n            },\n            {\n                \"x\": 100,\n                \"y\": -13\n            }\n        ],\n        \"max_profit\": 11,\n        \"max_loss\": 39.04,\n        \"break_even_points\": [\n            112.03999999999999,\n            116.5,\n            89,\n            87\n        ]\n    }\n}"
+				},
+				{
+					"name": "ERR_NegativeStrikePrice",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"strike_price\": -1, \n    \"type\": \"Call\", \n    \"bid\": 10.05, \n    \"ask\": 12.04, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 102.50, \n    \"type\": \"Call\", \n    \"bid\": 12.10, \n    \"ask\": 14, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 103, \n    \"type\": \"Put\", \n    \"bid\": 14, \n    \"ask\": 15.50, \n    \"long_short\": \"short\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 105, \n    \"type\": \"Put\", \n    \"bid\": 16, \n    \"ask\": 18, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/analyze",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"analyze"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jun 2024 14:14:11 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 1004,\n    \"message\": \"invalid request\",\n    \"data\": \"\"\n}"
+				},
+				{
+					"name": "ERR_InvalidType",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"strike_price\": 100, \n    \"type\": \"pall\", \n    \"bid\": 10.05, \n    \"ask\": 12.04, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 102.50, \n    \"type\": \"Call\", \n    \"bid\": 12.10, \n    \"ask\": 14, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 103, \n    \"type\": \"Put\", \n    \"bid\": 14, \n    \"ask\": 15.50, \n    \"long_short\": \"short\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 105, \n    \"type\": \"Put\", \n    \"bid\": 16, \n    \"ask\": 18, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/analyze",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"analyze"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jun 2024 14:14:53 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 1007,\n    \"message\": \"invalid request\",\n    \"data\": \"\"\n}"
+				},
+				{
+					"name": "ERR_InvalidTime",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"strike_price\": 100, \n    \"type\": \"Call\", \n    \"bid\": 10.05, \n    \"ask\": 12.04, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2023-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 102.50, \n    \"type\": \"Call\", \n    \"bid\": 12.10, \n    \"ask\": 14, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 103, \n    \"type\": \"Put\", \n    \"bid\": 14, \n    \"ask\": 15.50, \n    \"long_short\": \"short\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 105, \n    \"type\": \"Put\", \n    \"bid\": 16, \n    \"ask\": 18, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/analyze",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"analyze"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jun 2024 14:16:12 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 1005,\n    \"message\": \"invalid request\",\n    \"data\": \"\"\n}"
+				},
+				{
+					"name": "ERR_InvalidPosition",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"strike_price\": 100, \n    \"type\": \"Call\", \n    \"bid\": 10.05, \n    \"ask\": 12.04, \n    \"long_short\": \"pong\", \n    \"expiration_date\": \"2023-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 102.50, \n    \"type\": \"Call\", \n    \"bid\": 12.10, \n    \"ask\": 14, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 103, \n    \"type\": \"Put\", \n    \"bid\": 14, \n    \"ask\": 15.50, \n    \"long_short\": \"short\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 105, \n    \"type\": \"Put\", \n    \"bid\": 16, \n    \"ask\": 18, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/analyze",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"analyze"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jun 2024 14:16:39 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 1005,\n    \"message\": \"invalid request\",\n    \"data\": \"\"\n}"
+				},
+				{
+					"name": "Err_BidGreaterThanAsk",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"strike_price\": 100, \n    \"type\": \"Call\", \n    \"bid\": 10.05, \n    \"ask\": 1.04, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2023-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 102.50, \n    \"type\": \"Call\", \n    \"bid\": 12.10, \n    \"ask\": 14, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 103, \n    \"type\": \"Put\", \n    \"bid\": 14, \n    \"ask\": 15.50, \n    \"long_short\": \"short\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  },\n  {\n    \"strike_price\": 105, \n    \"type\": \"Put\", \n    \"bid\": 16, \n    \"ask\": 18, \n    \"long_short\": \"long\", \n    \"expiration_date\": \"2025-12-17T00:00:00Z\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/analyze",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"analyze"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jun 2024 14:17:15 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 1002,\n    \"message\": \"invalid request\",\n    \"data\": \"\"\n}"
+				}
+			]
+		}
+	]
+}

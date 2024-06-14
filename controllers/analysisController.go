@@ -52,7 +52,7 @@ func (a *analysisController) AnalysisHandler(ctx *gin.Context) {
 
 	err := ctx.Bind(&req)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, NewStandardResponse(int(stderr.ErrBindingTheRequest), "unable to perform analysis: internal server error", nil))
+		ctx.JSON(http.StatusBadRequest, NewStandardResponse(int(stderr.ErrBindingTheRequest), "unable to perform analysis: internal server error", nil))
 		return
 	}
 
@@ -78,11 +78,11 @@ func (a *analysisController) AnalysisHandler(ctx *gin.Context) {
 
 	resp, err := a.svc.Analysis(optsObj)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, NewStandardResponse(int(validationCode), "unable to perform the analysis", nil))
+		ctx.JSON(http.StatusInternalServerError, NewStandardResponse(int(validationCode), "unable to perform the analysis", nil))
 		return
 	}
 
-	xy := make([]XYValue, len(resp.XYValues))
+	xy := make([]XYValue, 0)
 
 	for i, v := range resp.XYValues {
 		xy[i] = XYValue{
