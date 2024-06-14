@@ -2,7 +2,10 @@ package common
 
 import (
 	"errors"
+	"fmt"
 	"math/big"
+	"os"
+	"path/filepath"
 	"regexp"
 )
 
@@ -29,3 +32,22 @@ const (
 	TYPE_CALL = "CALL"
 	TYPE_PUT  = "PUT"
 )
+
+func FindProjectRoot() (string, error) {
+	dir, err := os.Getwd()
+	if err != nil {
+		return "", err
+	}
+
+	for {
+		if _, err := os.Stat(filepath.Join(dir, "go.mod")); err == nil {
+			return dir, nil
+		}
+
+		parentDir := filepath.Dir(dir)
+		if parentDir == dir {
+			return "", fmt.Errorf("project root not found")
+		}
+		dir = parentDir
+	}
+}
