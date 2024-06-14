@@ -15,11 +15,13 @@ import (
 
 var (
 	TestDataFileName = "testdata/testdata.json"
-	Tolernace        = 1e-9
+	Tolerance        = 1e-9
 )
 
 func TestOptionSvc_Analysis(t *testing.T) {
 	t.Parallel()
+
+	optionsSvc := NewOptionsSvc(marketPriceMockForOptions(t))
 
 	t.Run("success", func(t *testing.T) {
 		t.Parallel()
@@ -37,8 +39,6 @@ func TestOptionSvc_Analysis(t *testing.T) {
 		expectedOptionsAnalysis.XYValues[3] = XYValue{X: 100, Y: -13}
 
 		expectedOptionsAnalysis.BreakEvenPoints = []float64{112.04, 116.5, 89, 87}
-
-		optionsSvc := NewOptionsSvc(marketPriceMockForOptions(t))
 
 		analysis, err := optionsSvc.Analysis(testObjectsFromTestData(t))
 		if err != nil {
@@ -64,14 +64,14 @@ func TestOptionSvc_Analysis(t *testing.T) {
 
 		for i, v := range analysis.BreakEvenPoints {
 			t.Log("break-even point: ", v)
-			if !(math.Abs(expectedOptionsAnalysis.BreakEvenPoints[i]-v) <= Tolernace) {
+			if !(math.Abs(expectedOptionsAnalysis.BreakEvenPoints[i]-v) <= Tolerance) {
 				t.Fatal("FAIL: expected: ", expectedOptionsAnalysis.BreakEvenPoints[i], "\tgot: ", v)
 			}
 		}
 	})
 }
 
-func marketPriceMockForOptions(t *testing.T) marketPrice.MarketPriceSvc {
+func marketPriceMockForOptions(t *testing.T) marketPrice.Service {
 	t.Helper()
 
 	return marketPriceMock.New(

@@ -34,7 +34,7 @@ type optionFunc func(mock *optionsContractMock)
 
 func (f optionFunc) apply(o *optionsContractMock) { f(o) }
 
-func New(opts ...Option) optionsContract.OptionsSvc {
+func New(opts ...Option) optionsContract.Service {
 	mock := new(optionsContractMock)
 	for _, o := range opts {
 		o.apply(mock)

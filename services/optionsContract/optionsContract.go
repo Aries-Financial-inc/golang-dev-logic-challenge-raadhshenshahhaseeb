@@ -19,13 +19,13 @@ type Options struct {
 	ExpirationDate time.Time `json:"expiration_date"`
 }
 
-type OptionsSvc interface {
+type Service interface {
 	Analysis(opts []*Options) (*OptionsAnalysis, error)
 	AnalysisCalculation(opts []*Options, price float64) (float64, float64, []float64, []XYValue)
 }
 
 type optionSvc struct {
-	MarketSvc marketPrice.MarketPriceSvc
+	MarketSvc marketPrice.Service
 }
 
 type OptionsAnalysis struct {
@@ -41,7 +41,7 @@ type XYValue struct {
 }
 
 // NewOptionsSvc initializes a new options service
-func NewOptionsSvc(mktSvc marketPrice.MarketPriceSvc) OptionsSvc {
+func NewOptionsSvc(mktSvc marketPrice.Service) Service {
 	return &optionSvc{MarketSvc: mktSvc}
 }
 

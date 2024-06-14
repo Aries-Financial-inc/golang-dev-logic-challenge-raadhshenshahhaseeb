@@ -36,7 +36,7 @@ type optionFunc func(mock *marketPriceMock)
 
 func (f optionFunc) apply(o *marketPriceMock) { f(o) }
 
-func New(opts ...Option) marketPrice.MarketPriceSvc {
+func New(opts ...Option) marketPrice.Service {
 	mock := new(marketPriceMock)
 	for _, o := range opts {
 		o.apply(mock)

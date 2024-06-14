@@ -1,10 +1,4 @@
-package routes
-
-import (
-	"net/http"
-
-	"github.com/gin-gonic/gin"
-)
+package router
 
 // OptionsContract structure for the request body
 type OptionsContract struct {
@@ -23,23 +17,4 @@ type AnalysisResult struct {
 type GraphPoint struct {
 	X float64 `json:"x"`
 	Y float64 `json:"y"`
-}
-
-func SetupRouter() *gin.Engine {
-	router := gin.Default()
-
-	router.POST("/analyze", func(c *gin.Context) {
-		var contracts []OptionsContract
-
-		if err := c.ShouldBindJSON(&contracts); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-
-		// Your code here
-
-		c.JSON(http.StatusOK, gin.H{"message": "Your code here"})
-	})
-
-	return router
 }

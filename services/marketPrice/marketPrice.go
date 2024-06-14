@@ -17,7 +17,7 @@ type Token struct {
 	Price   float64
 }
 
-type MarketPriceSvc interface {
+type Service interface {
 	Get() (*Token, error)
 	ChangePrice(price float64) (*Token, error)
 }
@@ -27,9 +27,8 @@ type marketPriceSvc struct {
 }
 
 // NewMarketPriceSvc is an over-simplified pricing service that only has one token to help with market price
-func NewMarketPriceSvc(token *Token) (MarketPriceSvc, error) {
+func NewMarketPriceSvc(token *Token) (Service, error) {
 	// much of the validations happening in this func are done since this is a mock implementation
-
 	if token == nil {
 		return nil, fmt.Errorf("nil token: token cannot be nil")
 	}
