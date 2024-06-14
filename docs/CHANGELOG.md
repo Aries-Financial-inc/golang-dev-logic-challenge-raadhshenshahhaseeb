@@ -31,3 +31,7 @@
 - `Underlying_Price` was not part of the request object, one idea was to simply init a `Token` in `OptionsContracts` but
   I figured why not just create a service, but it does seem like an overkill.
 - It would have been much better to have a `migrations` dir to add the test token, but I was already short on time.
+- Code comments could have been better and more explanatory.
+
+### Reference
+Reference for formulas was taken from [here](https://analystprep.com/blog/options-calculations-payoff-profit/). Special thanks to the author for a wonderful article.
