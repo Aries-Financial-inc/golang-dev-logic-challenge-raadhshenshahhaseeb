@@ -42,9 +42,8 @@ func (o *optionSvc) Analysis(opts []*model.Options) (*OptionsAnalysis, error) {
 		return nil, fmt.Errorf("unable to get the token price: %w", err)
 	}
 
-	analysis.MaxProfit, analysis.MaxLoss = o.CalculateMaxProfitAndLoss(opts, token.Price)
+	analysis.MaxProfit, analysis.MaxLoss, analysis.BreakEvenPoints = o.CalculateMaxProfitAndLoss(opts, token.Price)
 	analysis.XYValues = o.CalculateXYValues(opts, token.Price)
-	analysis.BreakEvenPoints = o.CalculateBreakEvenPoints(opts)
 
 	return analysis, nil
 }
@@ -55,80 +54,39 @@ func (o *optionSvc) CalculateXYValues(opts []*model.Options, price float64) []*X
 	return nil
 }
 
-func (o *optionSvc) CalculateMaxProfitAndLoss(opts []*model.Options, price float64) (float64, float64) {
+func (o *optionSvc) CalculateMaxProfitAndLoss(opts []*model.Options, price float64) (float64, float64, []float64) {
 	maxProfit := 0.0
 	maxLoss := 0.0
+	breakEvenPoints := make([]float64, 0)
 
 	for _, opt := range opts {
 		gains := 0.0
 
 		if strings.Compare(strings.ToUpper(opt.LongShort), common.QUOTE_BUY) == 0 {
 			if strings.Compare(strings.ToUpper(opt.Type), common.TYPE_CALL) == 0 {
-				gains = o.LongCall(opt.StrikePrice, opt.Ask, price)
+				gains = math.Max(price-opt.StrikePrice, 0) - opt.Ask
+				breakEvenPoints = append(breakEvenPoints, opt.StrikePrice+opt.Ask)
 			} else if strings.Compare(strings.ToUpper(opt.Type), common.TYPE_PUT) == 0 {
-				gains = o.LongPut(opt.StrikePrice, opt.Ask, price)
+				gains = math.Max(opt.StrikePrice-price, 0) - opt.Ask
+				breakEvenPoints = append(breakEvenPoints, opt.StrikePrice-opt.Ask)
 			}
 
 		} else if strings.Compare(strings.ToUpper(opt.LongShort), common.QUOTE_SELL) == 0 {
 			if strings.Compare(strings.ToUpper(opt.Type), common.TYPE_CALL) == 0 {
-				gains = o.ShortCall(opt.StrikePrice, opt.Bid, price)
+				gains = opt.Bid - math.Max(price-opt.StrikePrice, 0)
+				breakEvenPoints = append(breakEvenPoints, opt.StrikePrice+opt.Bid)
 			} else if strings.Compare(strings.ToUpper(opt.Type), common.TYPE_PUT) == 0 {
-				gains = o.ShortPut(opt.StrikePrice, opt.Bid, price)
+				gains = opt.Bid - math.Max(opt.StrikePrice-price, 0)
+				breakEvenPoints = append(breakEvenPoints, opt.StrikePrice-opt.Bid)
 			}
 		}
 
 		if gains < 0 {
-			maxLoss += -gains
+			maxLoss -= -gains
 		} else if gains > 0 {
 			maxProfit += gains
 		}
 	}
 
-	return maxProfit, maxLoss
-}
-
-func (o *optionSvc) LongCall(strike, ask, price float64) float64 {
-	return math.Max(price-strike, 0) - ask
-}
-
-func (o *optionSvc) LongPut(strike, ask, price float64) float64 {
-	return math.Max(strike-price, 0) - ask
-}
-
-func (o *optionSvc) ShortCall(strike, bid, price float64) float64 {
-	return bid - math.Max(price-strike, 0)
-}
-
-func (o *optionSvc) ShortPut(strike, bid, price float64) float64 {
-	return bid - math.Max(strike-price, 0)
-}
-
-func (o *optionSvc) CalculateBreakEvenPoints(opts []*model.Options) []float64 {
-	breakEvenPoints := make([]float64, 0)
-
-	for _, opt := range opts {
-		if strings.Compare(strings.ToUpper(opt.Type), common.TYPE_CALL) == 0 {
-			if strings.Compare(strings.ToUpper(opt.LongShort), common.QUOTE_BUY) == 0 {
-				breakEvenPoints = append(breakEvenPoints, opt.StrikePrice+opt.Ask)
-			} else if strings.Compare(strings.ToUpper(opt.LongShort), common.QUOTE_SELL) == 0 {
-				breakEvenPoints = append(breakEvenPoints, opt.StrikePrice+opt.Bid)
-			}
-		} else if strings.Compare(strings.ToUpper(opt.Type), common.TYPE_PUT) == 0 {
-			if strings.Compare(strings.ToUpper(opt.LongShort), common.QUOTE_BUY) == 0 {
-				breakEvenPoints = append(breakEvenPoints, opt.StrikePrice-opt.Ask)
-			} else if strings.Compare(strings.ToUpper(opt.LongShort), common.QUOTE_SELL) == 0 {
-				breakEvenPoints = append(breakEvenPoints, opt.StrikePrice-opt.Bid)
-			}
-		}
-	}
-
-	return nil
-}
-
-func (o *optionSvc) BreakEvenPointForCall(strike, quote float64) float64 {
-	return strike + quote
-}
-
-func (o *optionSvc) BreakEvenPointForPut(strike, quote float64) float64 {
-	return strike - quote
+	return maxProfit, maxLoss, breakEvenPoints
 }
