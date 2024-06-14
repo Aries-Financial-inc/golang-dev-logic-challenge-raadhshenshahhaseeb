@@ -47,9 +47,3 @@ func WithAnalysis(f func(opts []*optionsContract.Options) (*optionsContract.Opti
 		mock.analysis = f
 	})
 }
-
-func WithAnalysisCalculation(f func(opts []*optionsContract.Options, price float64) (float64, float64, []float64, []optionsContract.XYValue)) Option {
-	return optionFunc(func(mock *optionsContractMock) {
-		mock.analysisCalculation = f
-	})
-}
