@@ -32,6 +32,7 @@
   I figured why not just create a service, but it does seem like an overkill.
 - It would have been much better to have a `migrations` dir to add the test token, but I was already short on time.
 - Code comments could have been better and more explanatory.
+- Could have added validation test cases for the correct formulas and value calculations.
 
 ### Reference
 Reference for formulas was taken from [here](https://analystprep.com/blog/options-calculations-payoff-profit/). Special thanks to the author for a wonderful article.
