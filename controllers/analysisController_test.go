@@ -31,10 +31,10 @@ func TestAnalysisController(t *testing.T) {
 		testOptsService := optionsContractMock.New(
 			optionsContractMock.WithAnalysis(func(opts []*optionsContract.Options) (*optionsContract.OptionsAnalysis, error) {
 				return &optionsContract.OptionsAnalysis{
-					XYValues:        nil,
-					MaxProfit:       0,
-					MaxLoss:         0,
-					BreakEvenPoints: nil,
+					XYValues:        []optionsContract.XYValue{{X: 100, Y: 10}},
+					MaxProfit:       10,
+					MaxLoss:         10,
+					BreakEvenPoints: []float64{1.0, 2.0},
 				}, nil
 			}),
 		)

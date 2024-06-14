@@ -82,7 +82,7 @@ func (a *analysisController) AnalysisHandler(ctx *gin.Context) {
 		return
 	}
 
-	xy := make([]XYValue, 0)
+	xy := make([]XYValue, len(resp.XYValues))
 
 	for i, v := range resp.XYValues {
 		xy[i] = XYValue{
