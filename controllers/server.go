@@ -1,4 +1,4 @@
-package server
+package controllers
 
 import (
 	"fmt"
@@ -7,13 +7,11 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-
-	"github.com/Aries-Financial-inc/golang-dev-logic-challenge-raadhshenshahhaseeb/controllers"
 )
 
 type Container struct {
 	r           *gin.Engine
-	controllers *controllers.Controllers
+	controllers *Controllers
 }
 
 func Start() error {
@@ -62,7 +60,7 @@ func (c *Container) allowedPaths() {
 func (c *Container) initControllers() error {
 	var err error
 
-	c.controllers, err = controllers.New()
+	c.controllers, err = New()
 	if err != nil {
 		return fmt.Errorf("unable to init new controllers: %w", err)
 	}

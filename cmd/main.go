@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Aries-Financial-inc/golang-dev-logic-challenge-raadhshenshahhaseeb/cmd/server"
+	"github.com/Aries-Financial-inc/golang-dev-logic-challenge-raadhshenshahhaseeb/controllers"
 )
 
 func main() {
-	if err := server.Start(); err != nil {
+	if err := controllers.Start(); err != nil {
 		fmt.Fprintln(os.Stderr, "Error:", err)
 		os.Exit(1)
 	}
